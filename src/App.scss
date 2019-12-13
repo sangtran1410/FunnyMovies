@@ -1,0 +1,166 @@
+$white: #fff;
+$black: #000;
+$gray-dark: #8795a1;
+$gray-light: #D2D6DA;
+$blue: #3490dc;
+$blue-light: #6cb2eb;
+$blue-black: #00003B;
+$font-xs: 10px;
+$font-sm: 14px;
+$font-lg: 18px;
+$red: #ff004a;
+
+* {
+	font-family: arial, sans-serif;;
+}
+
+body {
+	color: $gray-dark;
+	-webkit-font-smoothing: subpixel-antialiased;
+}
+
+html,
+input,
+select,
+textarea {
+	font-family: arial, sans-serif;;
+}
+
+input, textarea {
+  padding: 5px 10px;
+  border: 1px solid $blue;
+}
+
+input {
+  height: 20px;  
+}
+
+button {
+  width: 100px;
+  height: 32px;
+  border: 1px solid $blue;
+  border-radius: 3px;
+  background: $blue-light;
+  cursor: pointer;
+
+  &.dark {
+    background: $blue-black;
+    color: $white;
+  }
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 50px;
+  height: 60px;
+  align-items: center;
+  box-shadow: 0 1px 2px $gray-dark;
+
+  .left-header {
+    display: flex;
+    align-items: center;
+
+    .title {
+      margin-left: 10px;
+      font-size: $font-lg;
+      font-weight: bold;
+    }  
+  }
+
+  .right-header {
+    input, button {
+      margin: 0 5px;
+    }
+  }
+}
+
+.video-list-page {
+  .list-videos {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px;
+
+    .video-items {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      margin-bottom: 50px;
+
+      .video-content {
+        width: 560px;
+        height: 315px;
+
+        iframe {
+          width: 100%;
+          height: 100%
+        }
+      }
+
+      .video-info {
+        line-height: 30px;
+        
+        h4 {
+          margin: 0 0 20px 0;
+          color: $red;
+        }
+
+        .emotion {
+          display: flex;
+          align-items: center;
+
+          img {
+            margin: 0 10px 0 3px; 
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }  
+}
+
+.share-movies-page {
+  .share-form {
+    margin: 0 auto;
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    max-width: 1200px;
+
+    form {
+      padding: 40px 30px;
+      width: 650px;
+      box-sizing: border-box;
+      box-shadow: 0 0 5px $gray-dark;
+      border: 1px solid $gray-dark;
+      border-radius: 5px; 
+      position: relative;
+
+      h4 {
+        position: absolute;
+        top: -10px;
+        left: 30px;
+        margin: 0;
+        background: $white;
+      }
+
+      .line {
+        margin-bottom: 20px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+
+        span {
+          line-height: 32px;
+        }
+
+        input, textarea {
+          grid-column-start: 2; 
+          grid-column-end: 4; 
+        }
+      }
+
+      div:last-child {
+        text-align: right;
+      }
+    }
+  }
+}

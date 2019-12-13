@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Permission from './components/Permission'
+import { Router } from "@reach/router"
+import VideoLists from './components/VideoLists'
+import ShareMovies from './components/ShareMovies'
+import Header from './components/Header'
+import AuthProvider from './components/AuthProvider'
+import './App.scss';
 
-function App() {
+function App () {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="page">
+      <AuthProvider>
+        <Header />
+        <Router>
+          <Permission
+            path='/'
+            yes={VideoLists}
+            // token={null}
+          />
+          <Permission
+            path='/share-movies'
+            yes={ShareMovies}
+            // token={token}
+          />
+        </Router>
+      </AuthProvider>
     </div>
-  );
+  )
 }
 
 export default App;
