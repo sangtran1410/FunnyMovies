@@ -1,8 +1,10 @@
 import React from 'react';
 import Home from '../icons/home.jpg'
 import { AuthContext } from './AuthProvider'
+import { useAxios } from '../services'
 import { isEmail } from '../services/help'
 import { navigate } from "@reach/router"
+import { EndPoint } from '../api'
 
 
 function Header () {
@@ -12,6 +14,7 @@ function Header () {
   })
 
   const context = React.useContext(AuthContext)
+  const axios = useAxios()
 
   function onChangeInput(e, type) {
     e.persist()
@@ -47,6 +50,43 @@ function Header () {
     }
   }
 
+  async function checkAccount() {
+    if (validate()) {
+      const { data } = await axios.get(EndPoint.user)
+
+      if (data) {
+        let userObj = data.filter((item) => (item.email === user.email))
+        userObj = userObj[0]
+
+        if (userObj && userObj.email === user.email && userObj.password === user.password) {
+          alert('Your account is exist !')
+        } else {
+          onRegister()
+        }
+      } else {
+        onRegister()
+      }
+    }
+  }
+
+  function onRegister() {
+    axios.post(EndPoint.user, user)
+    .then((res) => {
+      if (res && (res.staus === 200 || res.status === 201)) {
+        alert('Register success, you can login now !')        
+      }
+    })
+    .catch((err) => {
+      alert('Some thing went wrong !')      
+    })
+    .finally(() => {
+      setUser({
+        email: '',
+        password: '',
+      })
+    })
+  }
+
   return (
     <div className="app-header">
       <div className="left-header">
@@ -63,13 +103,12 @@ function Header () {
         }
         {!context.accessToken &&
           <>
-            <input type="text" onChange={e => onChangeInput(e, 'email')} placeholder="Email"></input>
-            <input type="password" onChange={e => onChangeInput(e, 'password')} placeholder="Password"></input>
+            <input type="text" value={user.email} onChange={e => onChangeInput(e, 'email')} placeholder="Email"></input>
+            <input type="password" value={user.password} onChange={e => onChangeInput(e, 'password')} placeholder="Password"></input>
             <button onClick={onLogin}>Login</button>
-            <button className="dark" onClick={onLogin}>Register</button>
+            <button className="dark" onClick={checkAccount}>Register</button>
           </>
         }
-
       </div>
     </div>
   )

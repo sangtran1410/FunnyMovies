@@ -13,11 +13,10 @@ export const AuthContext = React.createContext(initialState)
 
 export default function AuthProvider ({ children }) {
   const token = useLocalStorage('tokenVid')
-
   const axios = useAxios()
 
   const login = async ({ email, password } = {}) => {
-    const { data } = await axios.get(EndPoint.getUser)
+    const { data } = await axios.get(EndPoint.user)
 
     try {
       if (data) {
