@@ -24,7 +24,7 @@ function Header () {
     }))
   }
 
-  function validate() {
+  function validate(isRegister = false) {
     const err = []
     for (var key in user) {
       if (!user[key].trim()) {
@@ -33,7 +33,7 @@ function Header () {
     }
     
     if (err.length > 0) {
-      alert(`${err.join(', ')} is required !`)
+      alert(`Please input ${err.join(', ')} to ${isRegister ? 'register' : 'login'} !`)
       return false
     }
 
@@ -51,14 +51,14 @@ function Header () {
   }
 
   async function checkAccount() {
-    if (validate()) {
+    if (validate(true)) {
       const { data } = await axios.get(EndPoint.user)
 
       if (data) {
         let userObj = data.filter((item) => (item.email === user.email))
         userObj = userObj[0]
 
-        if (userObj && userObj.email === user.email && userObj.password === user.password) {
+        if (userObj && userObj.email === user.email) {
           alert('Your account is exist !')
         } else {
           onRegister()
